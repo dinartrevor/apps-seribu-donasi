@@ -1,0 +1,68 @@
+
+body {
+    font-family: "Nunito", sans-serif;
+    background-color: #f8f9fa;
+    padding-top: 56px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+  }
+  .navbar {
+    background-color: #2672be !important;
+  }
+  .footer {
+    background-color: #2672be !important;
+  }
+  .jumbotron {
+    background-image: url('../img/banner.png'); /* Ganti dengan path gambar yang sesuai */
+    background-size: cover;
+    background-position: center;
+    color: #ffffff;
+    text-align: center;
+    padding: 23% 0;
+    margin-bottom: 0;
+  }
+  .jumbotron h1 {
+    font-size: 3em;
+  }
+  .container-content {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+  }
+
+
+  .height-500px{
+    height: 500px;
+  }
+  @media (max-width: 767px) {
+    .jumbotron {
+        padding: 100px 0;
+    }
+    .img-height{
+      height: 200px;
+    }
+    .card-height{
+      height: 200px;
+    }
+  }
+
+  .see-more-link {
+    text-decoration: none;
+    color: #808080; /* Link color */
+    transition: color 0.3s ease-in-out;
+    font-size: 15px;
+  }
+
+  .see-more-link:hover {
+    color: #000000; /* Hover color */
+    text-decoration: none;
+    font-weight: 800;
+  }
+
+  .footer {
+    margin-top: auto;
+  }
