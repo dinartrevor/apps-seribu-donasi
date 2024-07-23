@@ -38,9 +38,9 @@
               <a class="dropdown-item d-flex align-items-center" href="#">
                 <i class="bi bi-box-arrow-right"></i>
                 <form action="{{ route('logout') }}" method="POST">
-					@csrf
-					<button type="submit" class="dropdown-item">Sign Out</button>
-				</form>
+                  @csrf
+                  <button type="submit" class="dropdown-item">Sign Out</button>
+                </form>
               </a>
             </li>
 
@@ -58,7 +58,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
         @can('dashboard')
         <li class="nav-item">
-          <a class="nav-link  {{ (request()->is('dashboard*')) ? '' : 'collapsed' }}" href="{{route('dashboard')}}">
+          <a class="nav-link  {{ (request()->is('admin/dashboard*')) ? '' : 'collapsed' }}" href="{{route('dashboard')}}">
             <i class="bi bi-grid"></i>
             <span>Dashboard</span>
           </a>
@@ -67,27 +67,27 @@
 
         @can('user-management')
         <li class="nav-item">
-            <a class="nav-link {{ (request()->is('user_management*')) ? '' : 'collapsed' }}" data-bs-target="#user-management-nav" data-bs-toggle="collapse" href="#">
+            <a class="nav-link {{ (request()->is('admin/user_management*')) ? '' : 'collapsed' }}" data-bs-target="#user-management-nav" data-bs-toggle="collapse" href="#">
             <i class="bi bi-people-fill"></i><span>User Management</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="user-management-nav" class="nav-content collapse {{ (request()->is('user_management*')) ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+            <ul id="user-management-nav" class="nav-content collapse {{ (request()->is('admin/user_management*')) ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
                 @can('user-list')
                 <li>
-                    <a href="{{route('user.index')}}"  class="{{ (request()->is('user_management/user*')) ? 'active' : '' }}">
+                    <a href="{{route('user.index')}}"  class="{{ (request()->is('admin/user_management/user*')) ? 'active' : '' }}">
                     <i class="bi bi-circle"></i><span>User</span>
                     </a>
                 </li>
                 @endcan
                 @can('role-list')
                 <li>
-                    <a href="{{route('role.index')}}""  class="{{ (request()->is('user_management/role*')) ? 'active' : '' }}">
+                    <a href="{{route('role.index')}}""  class="{{ (request()->is('admin/user_management/role*')) ? 'active' : '' }}">
                     <i class="bi bi-circle"></i><span>Role</span>
                     </a>
                 </li>
                 @endcan
                 @can('permission-list')
                 <li>
-                    <a href="{{route('permission.index')}}"" class="{{ (request()->is('user_management/permission*')) ? 'active' : '' }}">
+                    <a href="{{route('permission.index')}}"" class="{{ (request()->is('admin/user_management/permission*')) ? 'active' : '' }}">
                     <i class="bi bi-circle"></i><span>Permission</span>
                     </a>
                 </li>
@@ -95,5 +95,21 @@
             </ul>
         </li><!-- End Components Nav -->
       @endcan
+      @can('master-data')
+      <li class="nav-item">
+          <a class="nav-link {{ (request()->is('admin/master_data*')) ? '' : 'collapsed' }}" data-bs-target="#master-data-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-folder"></i><span>Master Data</span><i class="bi bi-chevron-down ms-auto"></i>
+          </a>
+          <ul id="master-data-nav" class="nav-content collapse {{ (request()->is('admin/master_data*')) ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+              @can('payment-method-list')
+              <li>
+                  <a href="{{route('payment_method.index')}}"  class="{{ (request()->is('admin/master_data/payment_method*')) ? 'active' : '' }}">
+                  <i class="bi bi-circle"></i><span>Payment Method</span>
+                  </a>
+              </li>
+              @endcan
+          </ul>
+      </li><!-- End Components Nav -->
+    @endcan
     </ul>
   </aside><!-- End Sidebar-->

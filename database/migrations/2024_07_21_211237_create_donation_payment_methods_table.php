@@ -13,9 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('students', function (Blueprint $table) {
+        Schema::create('donation_payment_methods', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('donation_id');
+            $table->unsignedBigInteger('payment_method_id');
+            $table->string('account_number');
+            $table->string('account_holder_name');
             $table->timestamps();
+            $table->index(['donation_id','payment_method_id'], 'donation_payment_methods_IDX');
+            
         });
     }
 
@@ -26,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('students');
+        Schema::dropIfExists('donation_payment_methods');
     }
 };

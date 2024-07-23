@@ -74,14 +74,10 @@
 </head>
 <body>
 	<div class="box-construction">
-		<img src="{{ asset('underconstruction/img/login.png') }}" class="image-logo" alt="">
+		<img src="{{ asset('assets/img/utb.jpeg') }}" class="image-logo" alt="">
 		<img src="{{ asset('underconstruction/img/animation.gif') }}" class="image-animation" alt="">
 		<p class="text-title">Page Not Found</p>
 		<p class="text-desc">Mohon maaf halaman yang anda cari tidak ditemukan</p>
-		<div class="box-btn">
-			<a href="https://www.facebook.com/sejutasenyuman/" target="blank" class="btn"><img src="{{ asset('underconstruction/img/facebook-icon.png') }}" alt=""></a>
-			<a href="https://twitter.com/loginmegastore" target="blank" class="btn"><img src="{{ asset('underconstruction/img/twitter-icon.png') }}" alt=""></a>
-		</div>
 	</div>
 </body>
 </html>

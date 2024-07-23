@@ -32,6 +32,7 @@ class UserRequest extends FormRequest
                 'image' => ['nullable','image','max:3048'],
                 'username' => ['nullable'],
                 'parent_id' => ['nullable'],
+                'npm' => ['nullable'],
             ];
         }else{
             return [
@@ -42,6 +43,7 @@ class UserRequest extends FormRequest
                 'image' => ['nullable','image','max:3048'],
                 'username' => ['nullable'],
                 'parent_id' => ['nullable'],
+                'npm' => ['nullable'],
             ];
         }
     }

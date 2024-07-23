@@ -30,6 +30,12 @@ class PermissionTableSeeder extends Seeder
             'permission-create',
             'permission-edit',
             'permission-delete',
+            'master-data',
+            'payment-method-list',
+            'payment-method-create',
+            'payment-method-edit',
+            'payment-method-delete',
+            'user-donation-list'
         ];
         foreach ($permissions as $permission) {
              Permission::create(['name' => $permission]);

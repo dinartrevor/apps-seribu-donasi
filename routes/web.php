@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PaymentMethodController;
 use App\Http\Controllers\UserManagement\PermissionController;
 use App\Http\Controllers\UserManagement\ProfileController;
 use App\Http\Controllers\UserManagement\RoleController;
@@ -23,12 +24,14 @@ use App\Http\Controllers\UserManagement\UserController;
 Route::get('/', [HomeController::class, 'index'])->name('frontEnd.index');
 Route::get('/login', [HomeController::class, 'login'])->name('frontEnd.login');
 Route::post('/login', [HomeController::class, 'authenticate'])->name('frontEnd.authenticate');
-Route::post('/logout', [HomeController::class, 'logout'])->name('frontEnd.logout');
+Route::get('/logout', [HomeController::class, 'logout'])->name('frontEnd.logout');
+Route::get('/about', [HomeController::class, 'about'])->name('frontEnd.about');
+
 Route::prefix('student')->group(function () {
-    Route::group(['middleware' => ['auth:student']], function() {
+    Route::group(['middleware' => ['auth']], function() {
         Route::get('profile', [HomeController::class, 'student'])->name('frontEnd.student');
         Route::post('profile', [HomeController::class, 'storeStudent'])->name('frontEnd.student.store');
-
+        Route::post('/password_reset', [HomeController::class, 'submitResetPassword'])->name("frontEnd.password.reset");
     });
 });
 
@@ -53,5 +56,9 @@ Route::prefix('admin')->group(function () {
             Route::post('profile', [ProfileController::class, 'store'])->name("profile.store");
             Route::get('user-struktur', [UserController::class, 'getStruktur'])->name("user.getStruktur");
         });
+        Route::group(['prefix'=>'master_data',], function(){
+            Route::resource('payment_method', PaymentMethodController::class)->except(['create','edit']);
+        });
     });
+    
 });

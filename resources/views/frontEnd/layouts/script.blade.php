@@ -9,12 +9,6 @@
   <script src="{{asset('assets/vendor/sweetalert2/sweetalert2.min.js')}}"></script>
   <script>
       $(document).ready(function () {
-          if($("#isVerify").val() != ""){
-              Swal.fire({
-                  title: "Akun Anda Belum Di Verifikasi Admin !!",
-                  icon: "warning"
-              });
-          }
           $('*select[data-selectModalCreatejs="true"]').select2({
               dropdownParent: $('#donationModal'),
               width: '100%',
@@ -24,6 +18,25 @@
               width: '100%',
           });
           $('#data-table').DataTable();
+          var Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000
+        });
+        @if (Session::has('success'))
+            Toast.fire({
+                icon: 'success',
+                title: '{{ Session::get('success') }}'
+            })
+        @endif
+
+        @if (Session::has('error'))
+            Toast.fire({
+                icon: 'error',
+                title: '{{ Session::get('error') }}'
+            })
+        @endif
           $(".number-only").keyup(function(e) {
               var regex = /^[0-9]+$/;
               if (regex.test(this.value) !== true) {

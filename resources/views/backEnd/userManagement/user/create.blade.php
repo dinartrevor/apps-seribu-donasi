@@ -1,5 +1,5 @@
 <div class="modal fade" id="modal-create" tabindex="-1">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Create User</h5>
@@ -9,21 +9,28 @@
             <div class="modal-body">
                 @csrf
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="name" class="form-label">Name <span class="text-red">*</span></label>
                         <input type="text" class="form-control  @error('name') is-invalid @enderror" name="name" id="name" autocomplete="off" placeholder="Enter Your Name">
                         @error('name')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
+                        <label for="npm" class="form-label">NPM</label>
+                        <input type="text" class="form-control  @error('npm') is-invalid @enderror number-only" name="npm" id="npm" autocomplete="off" placeholder="Enter Your NPM">
+                        @error('npm')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="col-md-6">
                         <label for="email" class="form-label">Email <span class="text-red">*</span></label>
                         <input type="email" class="form-control  @error('email') is-invalid @enderror"  name="email" id="email" autocomplete="off" placeholder="Enter Your Email">
                         @error('email')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label for="password" class="form-label">Password <span class="text-red">*</span></label>
                         <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password" autocomplete="off" placeholder="Enter Your Password">
                         @error('password')

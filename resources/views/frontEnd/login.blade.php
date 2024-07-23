@@ -4,9 +4,9 @@
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-        <title>Login - Log In Megastore</title>
-        <meta content="Log In Megastore" name="description">
-        <meta content="Log In Megastore" name="keywords">
+        <title>Login - Universitas Teknologi Bandung</title>
+        <meta content="Universitas Teknologi Bandung" name="description">
+        <meta content="Universitas Teknologi Bandung" name="keywords">
 
         <!-- Favicons -->
         <link href="{{ asset('assets/img/icon-utb.jpeg')}}" rel="icon">
@@ -47,7 +47,7 @@
 
                 <div class="d-flex justify-content-center py-4">
                     <a href="{{route('login')}}" class="d-flex align-items-center w-auto">
-                    <img src="{{ asset('assets/img/utb.jpeg')}}" alt="Log In Megastore" class="img-logo">
+                    <img src="{{ asset('assets/img/utb.jpeg')}}" alt="Universitas Teknologi Bandung" class="img-logo">
                     </a>
                 </div><!-- End Logo -->
 
@@ -70,7 +70,7 @@
                         <p class="text-center small">Enter your Email & Password to login</p>
                     </div>
 
-                    <form action="{{route('authenticate')}}" method="post" class="row g-3 needs-validation" novalidate>
+                    <form action="{{route('frontEnd.authenticate')}}" method="post" class="row g-3 needs-validation" novalidate>
                         @csrf
                         <div class="col-12">
                             <label for="yourUsername" class="form-label">Email</label>
@@ -105,9 +105,6 @@
                         <div class="col-12">
                             <button class="btn btn-primary w-100" type="submit">Login</button>
                         </div>
-                        <div class="col-12">
-                            <p class="mb-0 text-end"><a href="{{route('forgot.password')}}">Lupa Password ?</a></p>
-                          </div>
                     </form>
 
                     </div>
