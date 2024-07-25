@@ -26,12 +26,15 @@ Route::get('/login', [HomeController::class, 'login'])->name('frontEnd.login');
 Route::post('/login', [HomeController::class, 'authenticate'])->name('frontEnd.authenticate');
 Route::get('/logout', [HomeController::class, 'logout'])->name('frontEnd.logout');
 Route::get('/about', [HomeController::class, 'about'])->name('frontEnd.about');
+Route::get('/donation', [HomeController::class, 'donation'])->name('frontEnd.donation');
 
 Route::prefix('student')->group(function () {
     Route::group(['middleware' => ['auth']], function() {
         Route::get('profile', [HomeController::class, 'student'])->name('frontEnd.student');
         Route::post('profile', [HomeController::class, 'storeStudent'])->name('frontEnd.student.store');
         Route::post('/password_reset', [HomeController::class, 'submitResetPassword'])->name("frontEnd.password.reset");
+        Route::post('donation-store', [HomeController::class, 'storeDonation'])->name('frontEnd.donation.store');
+        Route::post('donation-verify/{donation}', [HomeController::class, 'donationVerify'])->name('frontEnd.donation.verify');
     });
 });
 

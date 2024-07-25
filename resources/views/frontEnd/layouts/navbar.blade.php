@@ -12,7 +12,7 @@
                     <a class="nav-link {{ (request()->is('/*')) ? 'active' : '' }}" href="{{ route('frontEnd.index') }}">Beranda</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ (request()->is('donasi*')) ? 'active' : '' }}" href="donasi.php">Donasi</a>
+                    <a class="nav-link {{ (request()->is('donation*')) ? 'active' : '' }}" href="{{ route('frontEnd.donation') }}">Donasi</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ (request()->is('about*')) ? 'active' : '' }}" href="{{ route('frontEnd.about') }}">Tentang Kami</a>

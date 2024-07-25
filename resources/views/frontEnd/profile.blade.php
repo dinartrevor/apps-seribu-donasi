@@ -125,7 +125,7 @@
                                                               <i class="bi bi-gear-fill"></i>
                                                           </button>
                                                           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                              <a class="dropdown-item verify" data-url-verify="<?= './../config/function/donation_verify.php' ?>" data-id="<?= $donation->id; ?>">
+                                                              <a class="dropdown-item verify" data-url-verify="{{ route('frontEnd.donation.verify', $donation->id) }}">
                                                                   <em class="bi bi-x-circle-fill close-card"></em>
                                                                   Not Active
                                                               </a>
@@ -236,5 +236,45 @@
       </div>
   </div>
 </div>
-
+@include('frontEnd.modal.donation')
 @endsection
+@push('scripts')
+    <script>
+        $('#data-table tbody').on('click', '.verify', function () {
+                var url = $(this).data('url-verify');
+                Swal.fire({
+                    title: "Are you sure to non Active it?",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes",
+                }).then((result) => {
+                    if (result.isConfirmed){
+                        $.ajax({
+                            url: url,
+                            type: "POST",
+                            data: {
+                                "_token": "{{ csrf_token() }}",
+                            },
+                            success: function (response) {
+                                if(response.status){
+                                    Swal.fire("Done!", "It was succesfully Not Active!", "success").then(function(){
+                                        location.reload();
+                                    });
+                                }else{
+                                    Swal.fire("Error deleting!", "Please try again", "error").then(function(){
+                                        location.reload();
+                                    });
+                                }
+                            },
+                            error: function (xhr, ajaxOptions, thrownError) {
+                                Swal.fire("Error deleting!", "Please try again", "error").then(function(){
+                                    location.reload();
+                                });
+                        }
+                        });
+                    }
+                });
+                });
+    </script>
+@endpush
