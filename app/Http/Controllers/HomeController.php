@@ -215,4 +215,65 @@ class HomeController extends Controller
      
         }
     }
+
+    public function paymentMethodUser(Request $request)
+    {
+        $donation = Donation::with('donationPaymentMethod')->find($request->id);
+        if($donation->donationPaymentMethod->isEmpty()) {
+            return response()->json([
+                'message' => 'Donation Payment Method Not Available',
+                'data'    => [],
+                'status' => false,
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        $paymentMethods = $donation->donationPaymentMethod->map(function($paymentMethod){
+            return [
+                'id' => $paymentMethod->payment_method_id,
+                'bank' => $paymentMethod->paymentMethod?->name,
+                'account_number' => $paymentMethod->account_number,
+                'account_holder_name' => $paymentMethod->account_holder_name,
+            ];
+        });
+
+        return response()->json([
+            'message' => 'Donation Payment Available',
+            'data'    => $paymentMethods,
+            'status' => true,
+        ], JsonResponse::HTTP_OK);
+    }
+
+    public function storeDonor(Request $request): RedirectResponse
+    {
+        $rules = [
+            'name' => 'required',
+            'amount' => 'required',
+            'payment_method_id' => 'required',
+        ];
+        $data = $request->validate($rules);
+        DB::beginTransaction();
+        try {
+            if ($request->hasFile('image')) {
+                $request->image = $this->storeImage('donor',$request->file('image'));
+            }
+            $donation =  Donor::create([
+                'donation_id'   => $request->donation_id,
+                'user_id'   => $request->user_id,
+                'payment_method_id'   => $request->payment_method_id,
+                'title'     =>'-',
+                'amount'    =>  str_replace(',', '', $request->amount),
+                'image'     => $request->hasFile('image') ? $request->image : '' ,
+                'notes'     => $request->notes,
+            ]);
+            if($donation->id){
+            
+                DB::commit();
+                return redirect()->route('frontEnd.index')->with('success', 'Berhasil Membuat Donasi');
+            }
+        } catch (\Exception $e) {
+            dd($e);
+            DB::rollback();
+            return back()->with('error', $e->getMessage());
+        }
+    }
 }

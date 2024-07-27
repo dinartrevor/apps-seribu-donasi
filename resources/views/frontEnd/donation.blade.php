@@ -40,7 +40,7 @@
                 <p class="card-text"><strong>Pembuat : </strong>{{ $donation->user?->name }}  - {{ $donation->created_at->diffForHumans() }}</p>
                 <p class="card-text"><strong>Target : Rp {{ number_format($donation->amount) }}</strong> </p>
                 @if(Auth::user())
-                <a href="#" class="btn btn-primary" onclick="clickDonor('{{$donation->id}}')">Donasi Sekarang</a>
+                <a href="#" class="btn btn-primary" onclick="clickDonor({{$donation->id}})">Donasi Sekarang</a>
                 @else
                     <a href="{{route('frontEnd.login')}}" class="btn btn-primary">Donasi Sekarang</a>
                @endif
@@ -50,4 +50,48 @@
     @endforeach
   </div>
 </div>
+@include('frontEnd.modal.donor')
 @endsection
+@push('scripts')
+    <script>
+         $(document).ready(function () {
+            $("#donor_payment_method_id").on("change", function() {
+                let account_number = $(this).find(':selected').attr('data-number');
+                let account_name = $(this).find(':selected').attr('data-name');
+                $("#donor_number").html('Nomor Rekening : ' + account_number);
+                $("#donor_name").html('Atas Nama : ' + account_name);
+            });
+        });
+
+        function clickDonor(id){
+            $("#donation_id").val(id);
+            getAllPaymentUser(id);
+        }
+        function getAllPaymentUser(id){
+            $.ajax({
+                url: "{{ route('frontEnd.donation.payment_method_user') }}",
+                type: 'GET',
+                data : {
+                    id : id
+                }
+            }).done(function (response) {
+                if(response.status){
+                    let data = response.data;
+                console.log(data);
+
+                    if(data.length > 0){
+                        let html = `<option value="" selected disabled>Pilih Metode Pembayaran</option>`;
+                        for (let i = 0; i < data.length; i++) {
+                            html +=`<option value="${data[i].id}" data-name="${data[i].account_holder_name}" data-number="${data[i].account_number}">${data[i].bank}</option>`
+                        }
+                        $('#donor_payment_method_id').html(html);
+                    }
+                    $("#donorModal").modal('show');
+                }
+            })
+            .fail(function () {
+                console.log("error");
+            });
+        }
+    </script>
+@endpush

@@ -74,7 +74,7 @@
                     <p class="card-text"><strong>Pembuat : </strong>{{ $donation->user?->name }}  - {{ $donation->created_at->diffForHumans() }}</p>
                     <p class="card-text"><strong>Target : Rp {{ number_format($donation->amount) }}</strong> </p>
                     @if(Auth::user())
-                    <a href="#" class="btn btn-primary" onclick="clickDonor('{{$donation->id}}')">Donasi Sekarang</a>
+                    <a href="#" class="btn btn-primary" onclick="clickDonor({{$donation->id}})">Donasi Sekarang</a>
                     @else
                         <a href="{{route('frontEnd.login')}}" class="btn btn-primary">Donasi Sekarang</a>
                    @endif
@@ -94,7 +94,7 @@
                 <div class="card-img-overlay d-flex align-items-center justify-content-center">
                     <div class="text-center">
                         <h1 class="card-title">Satu Rupiah Satu Harapan <br>#SeribuSenyuman</h1>
-                        @if (empty(Auth::guard('student')->user()->isVerify) && !empty(Auth::guard('student')->user()))
+                        @if (Auth::user())
                             <a href="#" class="btn btn-primary btn-lg mt-3" data-bs-toggle="modal" data-bs-target="#donationModal">Donasi Sekarang</a>
                         @else
                             <a href="{{route('frontEnd.login')}}" class="btn btn-primary btn-lg mt-3">Donasi Sekarang</a>
@@ -106,4 +106,48 @@
     </div>
 </div>
 @include('frontEnd.modal.donation')
+@include('frontEnd.modal.donor')
 @endsection
+@push('scripts')
+    <script>
+         $(document).ready(function () {
+            $("#donor_payment_method_id").on("change", function() {
+                let account_number = $(this).find(':selected').attr('data-number');
+                let account_name = $(this).find(':selected').attr('data-name');
+                $("#donor_number").html('Nomor Rekening : ' + account_number);
+                $("#donor_name").html('Atas Nama : ' + account_name);
+            });
+        });
+
+        function clickDonor(id){
+            $("#donation_id").val(id);
+            getAllPaymentUser(id);
+        }
+        function getAllPaymentUser(id){
+            $.ajax({
+                url: "{{ route('frontEnd.donation.payment_method_user') }}",
+                type: 'GET',
+                data : {
+                    id : id
+                }
+            }).done(function (response) {
+                if(response.status){
+                    let data = response.data;
+                console.log(data);
+
+                    if(data.length > 0){
+                        let html = `<option value="" selected disabled>Pilih Metode Pembayaran</option>`;
+                        for (let i = 0; i < data.length; i++) {
+                            html +=`<option value="${data[i].id}" data-name="${data[i].account_holder_name}" data-number="${data[i].account_number}">${data[i].bank}</option>`
+                        }
+                        $('#donor_payment_method_id').html(html);
+                    }
+                    $("#donorModal").modal('show');
+                }
+            })
+            .fail(function () {
+                console.log("error");
+            });
+        }
+    </script>
+@endpush

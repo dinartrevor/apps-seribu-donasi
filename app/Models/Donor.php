@@ -37,4 +37,13 @@ class Donor extends Model
     {
         return $this->belongsTo(PaymentMethod::class);
     }
+    /**
+     * Get the user that owns the Donor
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
 }

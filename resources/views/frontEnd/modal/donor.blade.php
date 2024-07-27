@@ -7,29 +7,38 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-          <form action="config/function/donor_store.php" method="POST" enctype='multipart/form-data'>
+          <form action="{{ route('frontEnd.donor.store') }}" method="POST" enctype='multipart/form-data'>
+						@csrf
             <input type="hidden" name="user_id" id="user_id" value='{{ Auth::user()?->id }}'>
             <input type="hidden" name="donation_id" id="donation_id">
           	<div class="row">
 				<div class="col-md-6">
 					<div class="mb-3">
 						<label for="title" class="form-label">Nama <span class="text-red">*</span></label>
-						<input type="text" class="form-control" id="name" name="name" value="{{ Auth::user()?->name }}">
+						<input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ Auth::user()?->name }}">
+						@error('name')
+						<div class="invalid-feedback">{{ $message }}</div>
+						@enderror
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="mb-3">
 						<label for="amount" class="form-label">Jumlah Donasi<span class="text-red">*</span></label>
-						<input type="text" class="form-control currency" id="amount" name="amount" value="<?= number_format(1000)?>">
+						<input type="text" class="form-control currency @error('amount') is-invalid @enderror" id="amount" name="amount" value="<?= number_format(1000)?>">
+						@error('amount')
+						<div class="invalid-feedback">{{ $message }}</div>
+						@enderror
 					</div>
 				</div>
         <div class="col-md-6">
             <div class="mb-3">
                 <label for="payment_method" class="form-label">Metode Pembayaran <span class="text-red">*</span></label>
-                <select name="payment_method_id" id="donor_payment_method_id" class="form-select"  aria-labelledby="payment_method"  data-selectModalDonorCreatejs="true" data-placeholder="Metode Pembayaran">
+                <select name="payment_method_id" id="donor_payment_method_id" class="form-select @error('payment_method_id') is-invalid @enderror"  aria-labelledby="payment_method"  data-selectModalDonorCreatejs="true" data-placeholder="Metode Pembayaran">
                     <option value="" selected disabled>Pilih Metode Pembayaran</option>
-
                 </select>
+								@error('payment_method_id')
+								<div class="invalid-feedback">{{ $message }}</div>
+								@enderror
                 <p class="h5 mt-2" id="donor_number"></p>
                 <p class="h5" id="donor_name"></p>
             </div>

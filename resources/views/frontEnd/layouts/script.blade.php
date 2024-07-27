@@ -9,6 +9,9 @@
   <script src="{{asset('assets/vendor/sweetalert2/sweetalert2.min.js')}}"></script>
   <script>
       $(document).ready(function () {
+            @if (count($errors) > 0)
+                $('#donorModal').modal('show');
+            @endif
           $('*select[data-selectModalCreatejs="true"]').select2({
               dropdownParent: $('#donationModal'),
               width: '100%',

@@ -111,5 +111,13 @@
           </ul>
       </li><!-- End Components Nav -->
     @endcan
+    @can('donation-list')
+      <li class="nav-item">
+        <a class="nav-link  {{ (request()->is('admin/donation*')) ? '' : 'collapsed' }}" href="{{route('donation.index')}}">
+          <i class="bi bi-grid"></i>
+          <span>Donasi</span>
+        </a>
+      </li>
+    @endcan
     </ul>
   </aside><!-- End Sidebar-->

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DonationController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PaymentMethodController;
@@ -35,6 +36,9 @@ Route::prefix('student')->group(function () {
         Route::post('/password_reset', [HomeController::class, 'submitResetPassword'])->name("frontEnd.password.reset");
         Route::post('donation-store', [HomeController::class, 'storeDonation'])->name('frontEnd.donation.store');
         Route::post('donation-verify/{donation}', [HomeController::class, 'donationVerify'])->name('frontEnd.donation.verify');
+        Route::get('payment_method_user', [HomeController::class, 'paymentMethodUser'])->name('frontEnd.donation.payment_method_user');
+        Route::post('donor-store', [HomeController::class, 'storeDonor'])->name('frontEnd.donor.store');
+
     });
 });
 
@@ -62,6 +66,8 @@ Route::prefix('admin')->group(function () {
         Route::group(['prefix'=>'master_data',], function(){
             Route::resource('payment_method', PaymentMethodController::class)->except(['create','edit']);
         });
+        Route::get('donation', [DonationController::class, 'index'])->name("donation.index");
+        Route::get('donation-pdf', [DonationController::class, 'exportPDF'])->name("donation.pdf");
     });
     
 });
